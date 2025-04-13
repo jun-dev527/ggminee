@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как подключиться | EpicCraft</title>
+</head>
+<body>
+    <nav>
+        <a href="main.html">На главную</a>
+    </nav>
+
+    <div class="header">
+        <div class="container">
+            <h1>Как подключиться к серверу</h1>
+            <p>Следуйте инструкции ниже для подключения к EpicCraft</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="connect-section">
+            <div class="server-info">
+                <h2>IP адрес сервера</h2>
+                <div class="ip-address" id="serverIp">**.**.**.**</div>
+                <p>Нажмите на IP адрес, чтобы скопировать</p>
+            </div>
+
+            <div class="instructions">
+                <div class="step">
+                    <h3>Шаг 1: Подготовка</h3>
+                    <p>********************</p>
+                </div>
+
+                <div class="step">
+                    <h3>Шаг 2: Установка лаунчера</h3>
+                    <p>********************</p>
+                    <a href="#" class="download-button">Скачать лаунчер</a>
+                </div>
+
+                <div class="step">
+                    <h3>Шаг 3: Установка версии</h3>
+                    <p>********************</p>
+                </div>
+
+                <div class="step">
+                    <h3>Шаг 4: Подключение</h3>
+                    <p>********************</p>
+                </div>
+
+                <div class="step">
+                    <h3>Возможные проблемы</h3>
+                    <p>********************</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        IP адрес скопирован!
+    </div>
+
+    <script>
+        document.getElementById('serverIp').addEventListener('click', function() {
+            navigator.clipboard.writeText(this.textContent)
+                .then(() => {
+                    const notification = document.getElementById('notification');
+                    notification.style.display = 'block';
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EpicCraft | эти сборки-вам понравятся</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --main-bg: #121212;
+            --accent: #4CAF50;
+            --text: #e0e0e0;
+            --secondary: #333333;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--main-bg) 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: glow 2s infinite;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent), #8BC34A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Enhanced Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: clamp(1rem, 2vw, 2rem);
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Enhanced Cards */
+        .mod-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            border-left: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mod-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mod-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced Features */
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Animations */
+        @keyframes glow {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Design Improvements */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .server-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --main-bg: #f5f5f5;
+                --text: #333333;
+                --secondary: #e0e0e0;
+            }
+        }
+
+        /* Стили для галереи */
+        .css-gallery {
+            width: 100%;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-slides img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(1.1);
+        }
+
+        .gallery-slides img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .gallery-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .gallery-controls button {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .gallery-controls button:hover {
+            background: rgba(76, 175, 80, 0.8);
+        }
+
+        .gallery-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Автопереключение слайдов */
+        @keyframes slideShow {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+
+            5% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            45% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        .gallery-slides img {
+            animation: slideShow 10s infinite;
+        }
+
+        .gallery-slides img:nth-child(2) {
+            animation-delay: 5s;
+        }
+
+        /* Остановка анимации при наведении */
+        .css-gallery:hover .gallery-slides img {
+            animation-play-state: paused;
+        }
+
+        /* Медиа-запросы */
+        @media (max-width: 768px) {
+            .gallery-container {
+                height: 250px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <h1>что я на гавнокодил</h1>
+        <p class="subtitle">Сервер с уникальными сборкамит и ламповым комьюнити</p>
+        <nav>
+            <a href="about.html">О сервере</a>
+            <a href="#mods">Моды</a>
+            <a href="#rules">Правила</a>
+            <a href="#gallery">Галерея</a>
+            <a href="connect.html">Как подключиться</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section id="about" class="section">
+            <h2><i class="fas fa-info-circle"></i> О нашем сервере</h2>
+            <p>EpicCraft - это не просто очередной Minecraft сервер. Это целая вселенная с тщательно подобранными
+                модами, создающая уникальный игровой опыт. Мы предлагаем:</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Технологии</h3>
+                    <p>Моды на технику, автоматизацию и электричество для любителей сложных механизмов</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-dragon"></i>
+                    <h3>Приключения</h3>
+                    <p>Новые измерения, боссы и опасности для искателей приключений</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-home"></i>
+                    <h3>Уют</h3>
+                    <p>Моды на декор и строительство для создания идеального дома</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Комьюнити</h3>
+                    <p>Активное и дружелюбное сообщество, готовое помочь новичкам</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="mods" class="section">
+            <h2><i class="fas fa-puzzle-piece"></i> наши сборки</h2>
+            <p>На сервере установлено более 100 модов в каждой сборке, вот некоторые из них:</p>
+
+            <div class="mod-list">
+                <div class="mod-card">
+                    <h3>№1 eldor</h3>
+                    <p>элдор это не просто сборка, это целый мир со своей историей кучей квестов, со своим сюжетом и
+                        прокачкой персонажей, кучей разнообразный оружий и классов, но и про технические моды не
+                        забывайте!</p>
+                </div>
+                <div class="mod-card">
+                    <h3>сборка</h3>
+                    <p>что-то сюда</p>
+                </div>
+                <div class="mod-card">
+                    <h3>сборка</h3>
+                    <p>что-то сюда</p>
+                </div>
+                <div class="mod-card">
+                    <h3>сборка</h3>
+                    <p>что-то сюда</p>
+                </div>
+                <div class="mod-card">
+                    <h3>сборка</h3>
+                    <p>что-то сюда</p>
+                </div>
+                <div class="mod-card">
+                    <h3>сборка</h3>
+                    <p>что-то сюда</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem;">Полный список модов можно посмотреть в нашем <a href="#"
+                    style="color: var(--accent);">Дискорд-сервере</a>.</p>
+        </section>
+
+        <section id="rules" class="section">
+            <h2><i class="fas fa-gavel"></i> Правила сервера</h2>
+            <ol style="margin-left: 2rem;">
+                <li>Никакого гриферства и воровства</li>
+                <li>Уважайте других игроков - никакого оскорбления или буллинга</li>
+                <li>Запрещено использование читов и багов</li>
+                <li>Стройте аккуратно, не портите ландшафт без необходимости</li>
+                <li>Чанки должны быть загружены (используйте /chunkload)</li>
+                <li>Администрация оставляет за собой право банна без объяснения причин</li>
+            </ol>
+        </section>
+
+        <section id="connect" class="section">
+            <h2><i class="fas fa-plug"></i> Как подключиться</h2>
+            <div class="server-info">
+                <div>
+                    <h3>IP адрес сервера:</h3>
+                    <p>Скопируйте адрес ниже и вставьте в поле "IP сервера"</p>
+                </div>
+                <div class="server-ip" onclick="navigator.clipboard.writeText('play.epiccraft.world')">
+                    play.epiccraft.world
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Инструкция по установке:</h3>
+            <ol style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Скачайте и установите <a href="https://files.minecraftforge.net/"
+                        style="color: var(--accent);">fabric</a> для версии 1.20.1</li>
+                <li>Скачайте модпак с нашего <a href="#" style="color: var(--accent);">Дискорда</a></li>
+                <li>Поместите файлы модов в папку mods</li>
+                <li>Запустите игру и добавьте наш сервер в список</li>
+                <li>Наслаждайтесь игрой!</li>
+            </ol>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 EpicCraft Minecraft Server. Все права не защищены.</p>
+        <div style="margin-top: 1rem;">
+            <a href="https://discord.gg/CZq8wQ7v" style="color: var(--accent); margin: 0 0.5rem;"><i class="fab fa-discord"></i></a>
+            <a href="#" style="color: var(--accent); margin: 0 0.5rem;"><i class="fab fa-vk"></i></a>
+            <a href="#" style="color: var(--accent); margin: 0 0.5rem;"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Копирование IP
+        document.querySelector('.server-ip').addEventListener('click', function () {
+            navigator.clipboard.writeText(this.textContent)
+                .then(() => {
+                    alert('IP адрес скопирован в буфер обмена!');
+                });
+        });
+
+        // Управление слайдером
+        function prevSlide(button) {
+            const gallery = button.closest('.css-gallery');
+            const slides = gallery.querySelectorAll('.slide');
+            const dots = gallery.querySelectorAll('.dot');
+            const currentSlide = gallery.querySelector('.slide.active');
+            const currentDot = gallery.querySelector('.dot.active');
+
+            let nextIndex = Array.from(slides).indexOf(currentSlide) - 1;
+            if (nextIndex < 0) nextIndex = slides.length - 1;
+
+            currentSlide.classList.remove('active');
+            currentDot.classList.remove('active');
+            slides[nextIndex].classList.add('active');
+            dots[nextIndex].classList.add('active');
+        }
+
+        function nextSlide(button) {
+            const gallery = button.closest('.css-gallery');
+            const slides = gallery.querySelectorAll('.slide');
+            const dots = gallery.querySelectorAll('.dot');
+            const currentSlide = gallery.querySelector('.slide.active');
+            const currentDot = gallery.querySelector('.dot.active');
+
+            let nextIndex = Array.from(slides).indexOf(currentSlide) + 1;
+            if (nextIndex >= slides.length) nextIndex = 0;
+
+            currentSlide.classList.remove('active');
+            currentDot.classList.remove('active');
+            slides[nextIndex].classList.add('active');
+            dots[nextIndex].classList.add('active');
+        }
+
+        function goToSlide(dot, index) {
+            const gallery = dot.closest('.css-gallery');
+            const slides = gallery.querySelectorAll('.slide');
+            const dots = gallery.querySelectorAll('.dot');
+
+            gallery.querySelector('.slide.active').classList.remove('active');
+            gallery.querySelector('.dot.active').classList.remove('active');
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+    </script>
+
+    <script src="screen.js"></script>
+    <script>
+        // Инициализация галерей
+        document.addEventListener('DOMContentLoaded', () => {
+            // Пути к скриншотам
+            const screenshots = [
+                './img/screen1.png',
+                './img/screen2.png'
+            ];
+
+            // Инициализируем галереи для первых двух карточек
+            new ScreenshotGallery('gallery-container-1', screenshots);
+            new ScreenshotGallery('gallery-container-2', screenshots);
+        });
+    </script>
+</body>
